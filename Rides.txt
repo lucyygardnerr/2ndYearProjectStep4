@@ -1,0 +1,20 @@
+Tower of Terror, N, Y, N, Medieval, Horror Water
+The Iron Jaws, >1, N, N, Medieval, Adrenaline
+Cloister of Cruelty, N, Y, 5-6, Medieval, Adrenaline Horror Water
+Pony Jousts, >0.8<1.2, N, N, Medieval, Kids
+Mystic Fortunes, N, Y, 1, Medieval, Adrenaline Horror
+Crisis at Farpoint, N, Y, 4-5, Futuristic, Adrenaline Kids Water
+Build a Bot, N, Y, N, Futuristic, Kids
+LaserLock, >1.1, N, 2-6, Futuristic, Adrenaline Horror
+Trench Chase, <1.6, Y, N, Futuristic, Adrenaline Kids
+Robot Conflicts, N, Y, N, Futuristic, Adrenaline Horror Kids
+Rex Rampage, N, N, 2, Jurassic, Adrenaline Horror Water
+Pet A Saur, <1, Y, N, Jurassic, Kids
+SauroPods, >1, N, N, Jurassic, Adrenaline Water
+RaptorRaces, N, Y, 2, Jurassic, Adrenaline Kids
+Hatchling Nest, <1, Y, N, Jurassic, Kids
+High Noon, N, Y, 2, Industrial, Adrenaline Kids
+Hall O Mirrors, N, Y, N, Industrial, Adrenaline
+Steampunk Cups, N, N, 3-6, Industrial, Adrenaline Horror Kids
+The Pain Train, >1, Y, 2-8, Industrial, Adrenaline Horror Water
+The Descent, N, N, N, Industrial, Adrenaline Horror Kids Water
