@@ -1,7 +1,11 @@
 // LUCY GARDNER GMB18183
+//Tree class to build the structure of the binary tree.
 public class LinkedBinaryTree {
 
-    protected static class Node<E> implements Position<E> {
+    public LinkedBinaryTree() {
+    }
+
+    static class Node<E> {
 
         private E element;
         private Node<E> left;
@@ -21,16 +25,6 @@ public class LinkedBinaryTree {
             return right;
         }
 
-        @Override
-        public E getElement() {
-            return element;
-        }
-
+        E getElement() { return element; }
     }
-
-    public LinkedBinaryTree() {
-    }
-
-
-
 }

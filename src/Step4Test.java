@@ -34,10 +34,10 @@ public class Step4Test {
         System.out.println("\nTesting Group Size Methods:");
         //Also tests getGroupSize method
         Group group = new Group();
-        group.setGroupSize(2);
+        group.setGroupSize("2");
         System.out.println("Group size 2: " + group.getGroupSize());
         System.out.println("Group size 1001: " + group.getGroupSize());
-        group.setGroupSize(1001);
+        group.setGroupSize("1001");
     }
 
     @Test
@@ -46,10 +46,10 @@ public class Step4Test {
         //Also tests getHeight method
         Group group = new Group();
         System.out.println("Within rage of 1 - 2.5: ");
-        group.setHeight(1.5);
+        group.setHeight("1.5");
         System.out.println("Group's height: " + group.getHeight());
         System.out.println("Outwith range (2.7): ");
-        group.setHeight(2.7);
+        group.setHeight("2.7");
     }
 
     @Test
@@ -95,7 +95,7 @@ public class Step4Test {
     @Test
     public void testGraph() throws IOException {
         System.out.println("\nTesting Graph is created and traversed correctly");
-        GraphApp graphApp = new GraphApp();
+        Graph graphApp = new Graph();
         int [][] graph = graphApp.setUpGraph();
         System.out.println("Call to set up graph method...");
         System.out.println("Print result of set up graph method: ");

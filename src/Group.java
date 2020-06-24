@@ -2,13 +2,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
+//Group class to store information on the group inputted by the user.
 class Group {
 
     private String name;
-    private String wheelchair;
-    private int groupSize;
     private String email;
+    private int groupSize;
     private double height;
+    private String wheelchair;
     private List<String> rideTypes = new ArrayList<>();
 
     Group(){
@@ -22,31 +23,6 @@ class Group {
         this.name = name;
     }
 
-    String isWheelchair() {
-        return wheelchair;
-    }
-
-    boolean setWheelchair(String wheelchair) {
-        if(!wheelchair.equals("Y") && !wheelchair.equals("N")){
-            System.out.println("Please enter either capital letter Y or N: ");
-            return false;
-        }
-        else{
-            this.wheelchair = wheelchair;
-            return true;
-        }
-    }
-
-
-    int getGroupSize() {
-        return groupSize;
-    }
-
-    void setGroupSize(int groupSize) {
-        this.groupSize = groupSize;
-    }
-
-
     String getEmail() {
         return email;
     }
@@ -58,7 +34,7 @@ class Group {
             return true;
         }
         else{
-            System.out.println("Sorry " + name + " " + email + " is not a valid email address. Please try again: ");
+            System.out.println("Sorry " + name + " " + email + " is not a valid email address.\nPlease ensure your email contains a '@': ");
             return false;
         }
     }
@@ -67,37 +43,70 @@ class Group {
         return email.contains("@");
     }
 
+    int getGroupSize() {
+        return groupSize;
+    }
+
+    boolean setGroupSize(String groupSize){
+        try {
+            int groupSizeInt = Integer.parseInt(groupSize);
+            if (groupSizeInt > 1000 || groupSizeInt <= 0) {
+                System.out.println("\nIncorrect group size!\nPlease enter only NUMBERS between 1 and 1000: ");
+                return false;
+            }
+            this.groupSize = groupSizeInt;
+            return true;
+        }catch(NumberFormatException exception){
+            System.out.println("** Please enter a NUMBER **");
+            return false;
+        }
+    }
+
     double getHeight() {
         return height;
     }
 
-    boolean setHeight(double height) {
-        /*String stringHeight = Double.toString(height);
-        if(Pattern.matches("[a-zA-Z]+", stringHeight)){
-            System.out.println("Please re-enter only using numbers: ");
+    boolean setHeight(String height) {
+        try{
+            double heightDouble = Double.parseDouble(height);
+            if(heightDouble >= 0.7 && heightDouble < 2.5) {
+                this.height = heightDouble;
+                return true;
+            }
+            else {
+                System.out.println("Please re-enter a normal height between 0.7 and 2.5: ");
+                return false;
+            }
+        }catch(NumberFormatException exception){
+            System.out.println("** Please enter a NUMBER **");
             return false;
-        }*/
-        if(height >= 0.7 && height < 2.5) {
-            this.height = height;
-            return true;
+        }
+    }
+
+    String isWheelchair() {
+        return wheelchair;
+    }
+
+    boolean setWheelchair(String wheelchair) {
+        if(!wheelchair.equals("Y") && !wheelchair.equals("N") && !wheelchair.matches("[a-zA-Z\\s]+[.]?[a-zA-Z\\s]*$")){
+            System.out.println("Please enter either letter Y or N: ");
+            return false;
         }
         else{
-            System.out.println("Please re-enter a normal height (between 0.7 and 2.5m) : ");
-            return false;
+            this.wheelchair = wheelchair;
+            return true;
         }
-    }
-
-    void clearRideTypes() {
-        rideTypes.clear();
-
-    }
-
-    void addRideType(String rideType) {
-        rideTypes.add(rideType);
-
     }
 
     List<String> getRideTypes() {
         return rideTypes;
+    }
+
+    void addRideType(String rideType) {
+        rideTypes.add(rideType);
+    }
+
+    void clearRideTypes() {
+        rideTypes.clear();
     }
 }
