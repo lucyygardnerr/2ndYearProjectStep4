@@ -103,6 +103,10 @@ public class Step4Test {
         System.out.println("\nCall to Dijkstra's method...");
         System.out.println("Print result of Dijkstra's method:");
         graphApp.dijkstra(graph);
+
+        System.out.println("\nCall to Prim's method...");
+        System.out.println("Print result of Prim's method:");
+        graphApp.primMST(graph);
     }
 
 

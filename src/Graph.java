@@ -9,69 +9,6 @@ public class Graph {
     private FileHandler fileHandler = new FileHandler();
     private List<Ride> rides;
     private static final int rideCount = 21;
-    private List<Integer> distance = new ArrayList<>();
-    private List<Integer> waitingTime = new ArrayList<>();
-
-    private void assignDistances(){
-        //Medieval Zone
-        distance.add(700);
-        distance.add(500);
-        distance.add(500);
-        distance.add(500);
-        distance.add(500);
-
-        //Futuristic Zone
-        distance.add(1000);
-        distance.add(500);
-        distance.add(500);
-        distance.add(500);
-        distance.add(500);
-
-        //Jurassic Zone
-        distance.add(1000);
-        distance.add(500);
-        distance.add(500);
-        distance.add(500);
-        distance.add(500);
-
-        //Industrial Zone
-        distance.add(1000);
-        distance.add(500);
-        distance.add(500);
-        distance.add(500);
-        distance.add(500);
-    }
-
-
-    private void assignWaitingTime(){
-        //Medieval Zone
-        waitingTime.add(10);
-        waitingTime.add(7);
-        waitingTime.add(5);
-        waitingTime.add(0);
-        waitingTime.add(3);
-
-        //Futuristic Zone
-        waitingTime.add(15);
-        waitingTime.add(4);
-        waitingTime.add(8);
-        waitingTime.add(11);
-        waitingTime.add(0);
-
-        //Jurassic Zone
-        waitingTime.add(5);
-        waitingTime.add(12);
-        waitingTime.add(2);
-        waitingTime.add(13);
-        waitingTime.add(0);
-
-        //Industrial Zone
-        waitingTime.add(14);
-        waitingTime.add(1);
-        waitingTime.add(6);
-        waitingTime.add(9);
-        waitingTime.add(0);
-    }
 
     private void getRideInfo() throws IOException {
         fileHandler.getRidesFromFile();
@@ -115,51 +52,9 @@ public class Graph {
         return graph;
     }
 
-    int[][] setUpShortestGraph() throws IOException{
-        /*This method receives the rides in from the fileHandler class and creates a graph
-          to match the order of the list of rides with the weight of the edges being a mixed
-          sum of distance between rides and the waiting time at each ride
-        */
-
-        getRideInfo();
-        assignDistances();
-        assignWaitingTime();
-
-        // Metric used is distance between nodes / 3 * waiting time
-        //If waiting time not applicable i.e at the entrance (first ride in graph) - just the distance is used
-
-        int graph[][] = new int[][]{
-                {0, 700, 0, 0, 0, 0, 1400, 0, 0, 0, 0, 1400, 0, 0, 0, 0, 700, 0, 0, 0, 0},
-                {distance.get(0), 0, distance.get(1) / (3 * waitingTime.get(0)), distance.get(2) / (3 * waitingTime.get(0)), distance.get(3) / (3 * waitingTime.get(0)), distance.get(4) / (3 * waitingTime.get(0)), distance.get(5) / (3 * waitingTime.get(0)), 0, 0, 0, 0, 1000/ (3 * waitingTime.get(0)), 0, 0, 0, 0, 1000 / (3 * waitingTime.get(0)), 0, 0, 0, 0},
-                {0, distance.get(1) / (3 * waitingTime.get(1)), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, distance.get(2) / (3 * waitingTime.get(2)), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, distance.get(3), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, distance.get(4) / (3 * waitingTime.get(4)), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-
-                {1400, distance.get(5) / (3 * waitingTime.get(5)), 0, 0, 0, 0, 0, distance.get(6) / (3 * waitingTime.get(5)),  distance.get(7) / (3 * waitingTime.get(5)),  distance.get(8) / (3 * waitingTime.get(5)),  distance.get(9) / (3 * waitingTime.get(5)),  distance.get(10) / (3 * waitingTime.get(5)), 0, 0, 0, 0,  1000 / (3 * waitingTime.get(5)), 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, distance.get(6) / (3 * waitingTime.get(6)), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, distance.get(7) / (3 * waitingTime.get(7)), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, distance.get(8) / (3 * waitingTime.get(8)), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, distance.get(9), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-
-                {1400, 1000 / (3 * waitingTime.get(10)), 0, 0, 0, 0, distance.get(10) / (3* waitingTime.get(10)), 0, 0, 0, 0, 0, distance.get(11) / (3 * waitingTime.get(10)), distance.get(12) / (3 * waitingTime.get(10)), distance.get(13) / (3 * waitingTime.get(10)), distance.get(14) / (3 * waitingTime.get(10)), distance.get(15) / (3 * waitingTime.get(10)), 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, distance.get(11) / (3 * waitingTime.get(11)), 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, distance.get(12) / (3 * waitingTime.get(12)), 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, distance.get(13) / (3 * waitingTime.get(13)), 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, distance.get(14), 0, 0, 0, 0, 0, 0, 0, 0, 0},
-
-                {distance.get(0), 1000 / (3 * waitingTime.get(15)),0,0,0,0, 1000 / (3 * waitingTime.get(15)),0,0,0,0, distance.get(15) / (3 * waitingTime.get(15)),0,0,0,0,0, distance.get(16) / (3 * waitingTime.get(15)), distance.get(17) / (3 * waitingTime.get(15)),distance.get(18) / (3 * waitingTime.get(15)),distance.get(19) / (3 * waitingTime.get(15))},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, distance.get(16) / (3 * waitingTime.get(16)), 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, distance.get(17) / (3 * waitingTime.get(17)), 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, distance.get(18) / (3 * waitingTime.get(18)), 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, distance.get(19), 0, 0, 0, 0}};
-
-        return graph;
-    }
-
     public static void main(String[] args) throws IOException {
         Graph graphapp = new Graph();
-        int[][] graph = graphapp.setUpShortestGraph();
+        int[][] graph = graphapp.setUpGraph();
         graphapp.primMST(graph);
     }
 
@@ -241,6 +136,27 @@ public class Graph {
 
     //--------------------MINIMUM SPANNING TREE CODE-----------------------------
 
+    private void printMST(List<Ride> sTRides, List<Integer> visitedRides, int graph[][], int parent[]){
+        /* This method prints the solution to the primMST method
+           It does so by splitting the rides in to their sections of the theme park
+           and printing the ride name alongside the distance from the previous ride in the route of the theme park and the waiting time at each ride
+         */
+        System.out.println("Ride                            Theme                 Distance From Previous Ride              Waiting Time at Ride\n");
+        for(int i =1; i < rideCount; i ++){
+            System.out.println(String.format("%-30s %-35s %-35d %-40d", sTRides.get(i).getName(), sTRides.get(i).getTheme(), graph[parent[visitedRides.get(i)]][visitedRides.get(i)], sTRides.get(i).getWaitingTime()));
+        }
+        totalWaitingTime();
+    }
+
+    private void totalWaitingTime(){
+        //This method calculates and prints the total waiting time of every ride in the park
+        int totalWaitingTime =0;
+        for (Ride ride : rides) {
+            totalWaitingTime += ride.getWaitingTime();
+        }
+        System.out.println("\nTotal waiting time of the entire park is " + totalWaitingTime / 60 + " hours");
+    }
+
     private int minWeightST(int key[], Boolean mstSet[]){
         int min = Integer.MAX_VALUE;
         int minIndex = -1;
@@ -254,72 +170,52 @@ public class Graph {
         return minIndex;
     }
 
-    private void printMST(int parent[], int graph[][]){
-        /* This method prints the solution to the primMST method
-           It does so by splitting the rides in to their sections of the theme park
-           and printing the ride name alongside the distance from the previous ride in the route of the theme park and the waiting time at each ride
-         */
-        System.out.println("Ride                          Weight               Distance From Previous Ride              Waiting Time at Ride");
-        System.out.println("\nMedieval Zone: ");
-        for(int i =1; i < rideCount; i ++){
-            if(rides.get(i).getTheme().equals("Medieval")){
-                System.out.println(String.format("%-30s %-30d %-40d %-35d", rides.get(i).getName(), graph[i][parent[i]], distance.get(i-1), rides.get(i).getWaitingTime()/*waitingTime.get(i-1)*/));
-            }
+    private int calculateWeight(int distance, int waitingTime){
+        int weight = distance;
+        if(waitingTime != 0){
+            weight = weight / (3* waitingTime);
         }
-        System.out.println("\nFuturistic Zone: ");
-        for (int i=1; i< rideCount; i++){
-            if(rides.get(i).getTheme().equals("Futuristic")){
-                System.out.println(String.format("%-30s %-30d %-40d %-35d", rides.get(i).getName(), graph[i][parent[i]], distance.get(i-1), rides.get(i).getWaitingTime()/*waitingTime.get(i-1)*/));            }
-        }
-        System.out.println("\nJurassic Zone: ");
-        for (int i=1; i< rideCount; i++){
-            if(rides.get(i).getTheme().equals("Jurassic")){
-                System.out.println(String.format("%-30s %-30d %-40d %-35d", rides.get(i).getName(), graph[i][parent[i]], distance.get(i-1), rides.get(i).getWaitingTime()/*waitingTime.get(i-1)*/));            }
-        }
-        System.out.println("\nIndustrial Zone: ");
-        for (int i=1; i< rideCount; i++){
-            if(rides.get(i).getTheme().equals("Industrial")){
-                System.out.println(String.format("%-30s %-30d %-40d %-35d", rides.get(i).getName(), graph[i][parent[i]], distance.get(i-1), rides.get(i).getWaitingTime()/*waitingTime.get(i-1)*/));            }
-        }
-        totalWaitingTime();
-    }
-
-    private void totalWaitingTime(){
-        //This method calculates and prints the total waiting time of every ride in the park
-        int totalWaitingTime =0;
-        for (Integer time : waitingTime) {
-            totalWaitingTime += time;
-        }
-        System.out.println("\nTotal waiting time of the entire park is " + totalWaitingTime / 60 + " hours");
+        return weight;
     }
 
     void primMST(int graph[][]){
         /* This method generates a minimum spanning tree of the park which provides the quickest
            route around the park to visit every ride
          */
-        int parent[] = new int[rideCount];
+        List<Ride> sTRides = new ArrayList<>();
+        List<Integer> visitedRides = new ArrayList<>();
         int key[] = new int[rideCount];
+        int parent[] = new int[rideCount];
         Boolean mstSet[] = new Boolean[rideCount];
 
-        for( int i =0; i<rideCount;i++){
+        for(int i =0; i<rideCount;i++){
             key[i] = Integer.MAX_VALUE;
             mstSet[i] = false;
         }
 
+        //weights and indexed by row in the graph
         key[0] = 0;
+        //previously visited nodes
         parent[0] = -1;
 
-        for(int count=0; count<rideCount-1; count++){
+        for(int count=0; count<rideCount; count++){
             int u = minWeightST(key, mstSet);
             mstSet[u] = true;
+            visitedRides.add(u);
+            sTRides.add(rides.get(u));
 
             for(int v = 0; v<rideCount;v++){
-                if(graph[u][v] != 0 && !mstSet[v] && graph[u][v] < key[v]){
+                if(graph[u][v] != 0 && !mstSet[v] && calculateWeight(graph[u][v], rides.get(v).getWaitingTime()) < key[v]){
+                    //sTRides.get(u).setDistance(graph[u][v]);
                     parent[v] = u;
-                    key[v] = graph[u][v];
+                    key[v] = calculateWeight(graph[u][v], rides.get(v).getWaitingTime());
                 }
             }
         }
-        printMST(parent, graph);
+        /*for (Ride stRide: sTRides){
+            System.out.println(stRide.getName());
+        }
+        */
+        printMST(sTRides, visitedRides, graph, parent);
     }
 }

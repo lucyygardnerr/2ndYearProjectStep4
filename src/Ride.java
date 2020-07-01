@@ -13,6 +13,7 @@ class Ride {
     String theme;
     int waitingTime;
     List<String> types = new ArrayList<>();
+    int distance;
 
     Ride() {
     }
@@ -46,6 +47,14 @@ class Ride {
     }
 
     int getWaitingTime(){ return waitingTime;}
+
+    void setDistance(int distance){
+        this.distance = distance;
+    }
+
+    int getDistance(){
+        return distance;
+    }
 }
 
 

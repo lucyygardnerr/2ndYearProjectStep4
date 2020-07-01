@@ -50,7 +50,7 @@ public class Recommendations {
                 break;
             case "4":
                 option =4;
-                quickestRoute();
+                mapOption();
                 break;
             case "5":
                 option =5;
@@ -503,18 +503,18 @@ public class Recommendations {
     }
 
     private void mapOption() throws IOException {
-        /* This method firstly constructs a graph and then calls the shortest path method on the graph
+        /* This method firstly checks if the user selected option 3 or 4 of the menu.
+           If 3 -> constructs a graph and calls the shortest path method on the graph
+           if 4 -> constructs a graph and calls the spanning tree method on the graph
            Once the map of the park (graph) has been displayed to the user it then asks the user
            if they would like to see the menu options again or quit
          */
-        graph.dijkstra(graph.setUpGraph());
-
-        graphEndOptions();
-    }
-
-    private void quickestRoute() throws IOException {
-
-        graph.primMST(graph.setUpShortestGraph());
+        if(option == 3) {
+            graph.dijkstra(graph.setUpGraph());
+        }
+        else if (option == 4){
+            graph.primMST(graph.setUpGraph());
+        }
 
         graphEndOptions();
     }
