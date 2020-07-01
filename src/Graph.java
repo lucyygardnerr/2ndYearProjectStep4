@@ -157,13 +157,16 @@ public class Graph {
         System.out.println("\nTotal waiting time of the entire park is " + totalWaitingTime / 60 + " hours");
     }
 
-    private int minWeightST(int key[], Boolean mstSet[]){
+    private int minWeightST(int weights[], Boolean mstSet[]){
+        /*This method calculates the smallest value of weights
+          to be added to the spanning tree
+        */
         int min = Integer.MAX_VALUE;
         int minIndex = -1;
 
         for(int v=0; v<rideCount; v++){
-            if(!mstSet[v] && key[v]<min){
-                min = key[v];
+            if(!mstSet[v] && weights[v]<min){
+                min = weights[v];
                 minIndex = v;
             }
         }
@@ -171,6 +174,10 @@ public class Graph {
     }
 
     private int calculateWeight(int distance, int waitingTime){
+        /* This method uses the current weight of the edges and
+           calculates the new weight using the specific formula
+           distance / ( 3 * waiting time )
+        */
         int weight = distance;
         if(waitingTime != 0){
             weight = weight / (3* waitingTime);
@@ -184,38 +191,33 @@ public class Graph {
          */
         List<Ride> sTRides = new ArrayList<>();
         List<Integer> visitedRides = new ArrayList<>();
-        int key[] = new int[rideCount];
-        int parent[] = new int[rideCount];
+        int weights[] = new int[rideCount];
+        int previousNodes[] = new int[rideCount];
         Boolean mstSet[] = new Boolean[rideCount];
 
         for(int i =0; i<rideCount;i++){
-            key[i] = Integer.MAX_VALUE;
+            weights[i] = Integer.MAX_VALUE;
             mstSet[i] = false;
         }
 
-        //weights and indexed by row in the graph
-        key[0] = 0;
+        //weights - indexed by row in the graph
+        weights[0] = 0;
         //previously visited nodes
-        parent[0] = -1;
+        previousNodes[0] = -1;
 
         for(int count=0; count<rideCount; count++){
-            int u = minWeightST(key, mstSet);
+            int u = minWeightST(weights, mstSet);
             mstSet[u] = true;
             visitedRides.add(u);
             sTRides.add(rides.get(u));
 
             for(int v = 0; v<rideCount;v++){
-                if(graph[u][v] != 0 && !mstSet[v] && calculateWeight(graph[u][v], rides.get(v).getWaitingTime()) < key[v]){
-                    //sTRides.get(u).setDistance(graph[u][v]);
-                    parent[v] = u;
-                    key[v] = calculateWeight(graph[u][v], rides.get(v).getWaitingTime());
+                if(graph[u][v] != 0 && !mstSet[v] && calculateWeight(graph[u][v], rides.get(v).getWaitingTime()) < weights[v]){
+                    previousNodes[v] = u;
+                    weights[v] = calculateWeight(graph[u][v], rides.get(v).getWaitingTime());
                 }
             }
         }
-        /*for (Ride stRide: sTRides){
-            System.out.println(stRide.getName());
-        }
-        */
-        printMST(sTRides, visitedRides, graph, parent);
+        printMST(sTRides, visitedRides, graph, previousNodes);
     }
 }

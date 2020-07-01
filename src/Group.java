@@ -34,7 +34,7 @@ class Group {
             return true;
         }
         else{
-            System.out.println("Sorry " + name + " " + email + " is not a valid email address.\nPlease ensure your email contains a '@': ");
+            System.out.println("Sorry " + name + " " + email + " is not a valid email address.\nPlease ensure your email is in the format of ExampleEmail@email.com: ");
             return false;
         }
     }

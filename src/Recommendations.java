@@ -183,7 +183,7 @@ public class Recommendations {
         System.out.println("** Please enter Y for yes and N for no **");
         for (int i=0; i< types.size(); i++){
             System.out.println(types.get(i) + ": ");
-            input = scanner.next();
+            input = scanner.next().toUpperCase();
 
             if(!input.equals("Y") && !input.equals("N")){
                 System.out.println("Please enter either LETTER Y or N! ");
@@ -356,7 +356,7 @@ public class Recommendations {
     }
 
     private boolean addWheelchair(){
-        reasons.add(ride.getName() + " is not suitable for wheelchair users.");
+        reasons.add("- " + ride.getName() + " is not suitable for wheelchair users.");
         applicableRides.remove(ride);
         return false;
     }
@@ -408,15 +408,11 @@ public class Recommendations {
           - if there are tells the user which rides are suitable in each themed section
           - if not tells the user that no rides in that section are suitable for them
         */
-        System.out.println("Applicable Rides: ");
-        for (Ride ride : applicableRides){
-            System.out.println(ride.getName() + "\n");
-        }
         System.out.println("\nMedieval Zone: ");
         boolean medieval = false;
         for (Ride ride: applicableRides){
             if(ride.theme.equals("Medieval")){
-                System.out.println("\n" + ride.name);
+                System.out.println(ride.name);
                 medieval = true;
             }
         }
@@ -483,7 +479,11 @@ public class Recommendations {
     private void lastOptions() throws IOException {
         // This method asks the user whether they want to revise their data or continue to email / print
         System.out.println("\nDo you want to revise your choices or continue? \n** Please enter R to revise C to continue ** ");
-        String input = scanner.next();
+        String input = scanner.next().toUpperCase();
+        while(!input.equals("R") && !input.equals("C")){
+            System.out.println("Invalid - please enter either R or C: ");
+            input = scanner.next().toUpperCase();
+        }
         switch (input){
             case "R":
                 reasons.clear();
@@ -521,11 +521,11 @@ public class Recommendations {
 
     private void graphEndOptions() throws IOException {
         // This method asks the user whether they want to see the menu options again or quit
-        System.out.println("\nDo you want to choose another option or quit? \n** Please enter M to display Recommendations or Q to quit ** ");
-        String input = scanner.next();
-        if(!input.equals("M") && !input.equals("Q")){
+        System.out.println("\nDo you want to choose another option or quit? \n** Please enter M to display the menu or Q to quit ** ");
+        String input = scanner.next().toUpperCase();
+        while(!input.equals("M") && !input.equals("Q")){
             System.out.println("Invalid - please enter either M or Q: ");
-            input = scanner.next();
+            input = scanner.next().toUpperCase();
         }
         switch (input){
             case "M":
